@@ -1,5 +1,8 @@
 namespace Budgeter.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -26,6 +29,18 @@ namespace Budgeter.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            var userManager = new UserManager<ApplicationUser>(
+            new UserStore<ApplicationUser>(context));
+            if (!context.Users.Any(u => u.Email == "annette.arrigucci@outlook.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "annette.arrigucci@outlook.com",
+                    Email = "annette.arrigucci@outlook.com",
+                    FirstName = "Annette",
+                    LastName = "Arrigucci",
+                }, "Abc&123!");
+            }
         }
     }
 }

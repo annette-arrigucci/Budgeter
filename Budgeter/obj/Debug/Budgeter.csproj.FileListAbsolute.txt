@@ -67,3 +67,8 @@ c:\Users\Me\projects\Budgeter\Budgeter\bin\Microsoft.Owin.Security.MicrosoftAcco
 c:\Users\Me\projects\Budgeter\Budgeter\obj\Debug\Budgeter.csprojResolveAssemblyReference.cache
 c:\Users\Me\projects\Budgeter\Budgeter\obj\Debug\Budgeter.dll
 c:\Users\Me\projects\Budgeter\Budgeter\obj\Debug\Budgeter.pdb
+C:\Users\Me\projects\Budgeter\Budgeter\bin\SendGrid.dll
+C:\Users\Me\projects\Budgeter\Budgeter\bin\SendGrid.SmtpApi.dll
+C:\Users\Me\projects\Budgeter\Budgeter\bin\SendGridMail.dll
+C:\Users\Me\projects\Budgeter\Budgeter\bin\System.Net.Http.Formatting.dll
+C:\Users\Me\projects\Budgeter\Budgeter\bin\System.Net.Http.Formatting.xml

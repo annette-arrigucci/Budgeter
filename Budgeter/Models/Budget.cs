@@ -12,6 +12,7 @@ namespace Budgeter.Models
         [Required(ErrorMessage ="Name is required")]
         public string Name { get; set; }
         [Required]
+        [Display(Name = "Household")]
         public string HouseholdId { get; set; }
 
         public Budget()

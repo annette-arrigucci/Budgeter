@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Budgeter.Controllers
 {
-    public class ErrorController : Controller
+    public class ErrorsController : Controller
     {
         // GET: Error
         public ActionResult Index(string errorMessage)

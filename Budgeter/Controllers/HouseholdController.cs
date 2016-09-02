@@ -22,8 +22,10 @@ namespace Budgeter.Controllers
             var userId = User.Identity.GetUserId();
             var user = db.Users.Find(userId);
             var householdMembersInfo = new List<UserInfoViewModel>();
+            ViewBag.HouseholdId = 0;
             if (user.HouseholdId != null) { 
                 var householdId = user.HouseholdId;
+                ViewBag.HouseholdId = householdId;
                 var householdMembers = db.Users.Where(x => x.HouseholdId == householdId).ToList();
                 foreach(var member in householdMembers)
                 {
@@ -35,7 +37,7 @@ namespace Budgeter.Controllers
                     };
                     householdMembersInfo.Add(uinfo);
                 }
-            }          
+            }                      
             return View(householdMembersInfo);
         }
 
@@ -99,11 +101,11 @@ namespace Budgeter.Controllers
                 Household hhold = db.Households.Find(householdId);
                 if (hhold == null)
                 {
-                    return RedirectToAction("Index", "Error", new { errorMessage = "Not Found" });
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "Not Found" });
                 }
                 if (string.IsNullOrEmpty(email))
                 {
-                    return RedirectToAction("Index", "Errors", "Email address empty");
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "Email address empty" });
                 }
                 else
                 {
@@ -111,11 +113,11 @@ namespace Budgeter.Controllers
                     var emailChecker = new RegexUtilities();
                     if (!emailChecker.IsValidEmail(email))
                     {
-                        return RedirectToAction("Index", "Errors", "Email address not valid");
+                        return RedirectToAction("Index", "Errors", new { errorMessage = "Email address not valid" });
                     }
                     //if the email address is valid, send the email
                     SendEmailInvitation(email, householdId);
-                    return RedirectToAction("Dashboard","Home");
+                    return RedirectToAction("Index","Household");
 
                 }
             }
@@ -127,7 +129,7 @@ namespace Budgeter.Controllers
             Household hhold = db.Households.Find(householdId);
             if (hhold == null)
             {
-                RedirectToAction("Index", "Error", new { errorMessage = "Not Found" });
+                RedirectToAction("Index", "Errors", new { errorMessage = "Not Found" });
             }
             var callbackUrl = "http://aarrigucci-budgeter.azurewebsites.net/Household/Join/" + householdId;
             string subject = "Invitation to join Budgeter household";

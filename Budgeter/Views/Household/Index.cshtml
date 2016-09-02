@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Budgeter.Models.UserInfoViewModel>
 @using Microsoft.AspNet.Identity
+@using Budgeter.Models
+
 @{
     ViewBag.Title = "Index";
 }
@@ -43,4 +45,8 @@ else
     </tbody>
 </table>
 }
-@Html.Partial("_InviteUser")
+@{ 
+    var emailModel = new EmailViewModel();
+    emailModel.HouseholdId = ViewBag.HouseholdId; 
+}
+@Html.Partial("_InviteUser", emailModel)

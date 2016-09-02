@@ -199,9 +199,11 @@
     <Compile Include="Models\BudgetItem.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategoryHousehold.cs" />
+    <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\Household.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RegexUtilities.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\UserInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -271,6 +273,7 @@
     <Content Include="Views\Household\Create.cshtml" />
     <Content Include="Views\Household\Index.cshtml" />
     <Content Include="Views\Errors\Index.cshtml" />
+    <Content Include="Views\Shared\_InviteUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

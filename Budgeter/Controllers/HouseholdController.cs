@@ -89,10 +89,58 @@ namespace Budgeter.Controllers
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        //Post
-        public ActionResult InviteUser()
+        //POST: Households/InviteUser
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult InviteUser(string email, int householdId)
         {
+            if (ModelState.IsValid)
+            {
+                Household hhold = db.Households.Find(householdId);
+                if (hhold == null)
+                {
+                    return RedirectToAction("Index", "Error", new { errorMessage = "Not Found" });
+                }
+                if (string.IsNullOrEmpty(email))
+                {
+                    return RedirectToAction("Index", "Errors", "Email address empty");
+                }
+                else
+                {
+                    //use utilities to see if email is valid
+                    var emailChecker = new RegexUtilities();
+                    if (!emailChecker.IsValidEmail(email))
+                    {
+                        return RedirectToAction("Index", "Errors", "Email address not valid");
+                    }
+                    //if the email address is valid, send the email
+                    SendEmailInvitation(email, householdId);
+                    return RedirectToAction("Dashboard","Home");
+
+                }
+            }
             return View();
+        }
+
+        public async Task SendEmailInvitation(string email, int householdId)
+        {
+            Household hhold = db.Households.Find(householdId);
+            if (hhold == null)
+            {
+                RedirectToAction("Index", "Error", new { errorMessage = "Not Found" });
+            }
+            var callbackUrl = "http://aarrigucci-budgeter.azurewebsites.net/Household/Join/" + householdId;
+            string subject = "Invitation to join Budgeter household";
+            var emailCode = hhold.Code;
+            string message = "You have been invited to join the " + hhold.Name + " household on the Budgeter application. Click <a href=\"" + callbackUrl + "\" target=\"_blank\">here</a> to join. If you don’t have an account, you will be prompted to create one. Enter the code " + emailCode + ".";
+            
+            var es = new EmailService();
+            es.SendAsync(new IdentityMessage
+            {
+                Destination = email,
+                Subject = subject,
+                Body = message
+            });
         }
 
         //Post

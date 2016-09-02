@@ -16,9 +16,26 @@ namespace Budgeter.Controllers
         
 
         // GET: Households
+        [Authorize]
         public ActionResult Index()
         {
-            return View();
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var householdMembersInfo = new List<UserInfoViewModel>();
+            if (user.HouseholdId != null) { 
+                var householdId = user.HouseholdId;
+                var householdMembers = db.Users.Where(x => x.HouseholdId == householdId).ToList();
+                foreach(var member in householdMembers)
+                {
+                    var uinfo = new UserInfoViewModel
+                    {
+                        DisplayName = member.FirstName + " " + member.LastName,
+                        Email = member.Email
+                    };
+                    householdMembersInfo.Add(uinfo);
+                }
+            }          
+            return View(householdMembersInfo);
         }
 
         //GET: Households/Create

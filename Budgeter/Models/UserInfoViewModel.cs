@@ -10,6 +10,7 @@ namespace Budgeter.Models
     {
         [Display(Name ="Name")]
         public string DisplayName { get; set; }
-        public string Email { get; set; }     
+        public string Email { get; set; }
+        public string UserId { get; set; }     
     }
 }

@@ -30,7 +30,8 @@ namespace Budgeter.Controllers
                     var uinfo = new UserInfoViewModel
                     {
                         DisplayName = member.FirstName + " " + member.LastName,
-                        Email = member.Email
+                        Email = member.Email,
+                        UserId = member.Id
                     };
                     householdMembersInfo.Add(uinfo);
                 }
@@ -53,6 +54,7 @@ namespace Budgeter.Controllers
             if (ModelState.IsValid)
             {
                 //create the household in the database
+                model.Code = GetRandomString();
                 db.Households.Add(model);
                 db.SaveChanges();
 
@@ -77,6 +79,14 @@ namespace Budgeter.Controllers
             ApplicationUser user = userManager.FindById(userId);
             user.HouseholdId = (int)householdId;
             IdentityResult result = await userManager.UpdateAsync(user);
+        }
+
+        public string GetRandomString()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 5)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         //Post

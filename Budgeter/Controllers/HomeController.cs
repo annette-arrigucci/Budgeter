@@ -10,6 +10,14 @@ namespace Budgeter.Controllers
     {
         public ActionResult Index()
         {
+            return RedirectToAction("Dashboard", "Home");
+        }
+
+        [Authorize]
+        public ActionResult Dashboard()
+        {
+            ViewBag.Message = "This is the dashboard page.";
+
             return View();
         }
 

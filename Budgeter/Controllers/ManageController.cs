@@ -52,6 +52,7 @@ namespace Budgeter.Controllers
 
         //
         // GET: /Manage/Index
+        [Authorize]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -87,6 +88,7 @@ namespace Budgeter.Controllers
         }
 
         // GET: /Manage/EditProfile
+        [Authorize]
         public ActionResult EditProfile()
         {
             var userId = User.Identity.GetUserId();

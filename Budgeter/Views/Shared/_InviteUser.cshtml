@@ -10,8 +10,10 @@ using (Html.BeginForm("InviteUser", "Household", new { email = Model.Email, hous
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
           <div class="row">
-            <div class="col-md-4 col-md-offset-2">
-                Invite another user to join your household.<br>
+            <div class="col-md-6 col-md-offset-1">
+                <p>
+                    Invite another user to join your household.
+                </p>
             </div>
           </div>
           <div class="row">

@@ -8,6 +8,6 @@ namespace Budgeter.Models
     public class EmailViewModel
     {
         public string Email { get; set; }
-        public int HouseholdId { get; set; }
+        public int? HouseholdId { get; set; }
     }
 }

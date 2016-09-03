@@ -274,6 +274,7 @@
     <Content Include="Views\Household\Index.cshtml" />
     <Content Include="Views\Errors\Index.cshtml" />
     <Content Include="Views\Shared\_InviteUser.cshtml" />
+    <Content Include="Views\Household\Join.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

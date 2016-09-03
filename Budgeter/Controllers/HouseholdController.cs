@@ -22,9 +22,10 @@ namespace Budgeter.Controllers
             var userId = User.Identity.GetUserId();
             var user = db.Users.Find(userId);
             var householdMembersInfo = new List<UserInfoViewModel>();
-            ViewBag.HouseholdId = 0;
-            if (user.HouseholdId != null) { 
-                var householdId = user.HouseholdId;
+            var householdId = user.HouseholdId;
+            string householdName = null;
+            
+            if (user.HouseholdId != null) {                      
                 ViewBag.HouseholdId = householdId;
                 var householdMembers = db.Users.Where(x => x.HouseholdId == householdId).ToList();
                 foreach(var member in householdMembers)
@@ -37,7 +38,10 @@ namespace Budgeter.Controllers
                     };
                     householdMembersInfo.Add(uinfo);
                 }
-            }                      
+                householdName = db.Households.Find(householdId).Name;
+            }
+            ViewBag.HouseholdName = householdName;
+            ViewBag.HouseholdId = householdId;                      
             return View(householdMembersInfo);
         }
 
@@ -79,8 +83,23 @@ namespace Budgeter.Controllers
         {       
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             ApplicationUser user = userManager.FindById(userId);
-            user.HouseholdId = (int)householdId;
-            IdentityResult result = await userManager.UpdateAsync(user);
+            if(user.HouseholdId!= null)
+            {
+                if(user.HouseholdId == householdId)
+                {
+                    //if the user is already assigned to this household, do nothing
+                }
+                else
+                {
+                    user.HouseholdId = (int)householdId;
+                    IdentityResult result = await userManager.UpdateAsync(user);
+                }
+            }
+            else
+            {
+                user.HouseholdId = (int)householdId;
+                IdentityResult result = await userManager.UpdateAsync(user);
+            }                     
         }
 
         public string GetRandomString()
@@ -145,13 +164,61 @@ namespace Budgeter.Controllers
             });
         }
 
-        //Post
-        public ActionResult Join()
+        //GET
+        [Authorize]
+        public ActionResult Join(int? Id)
         {
-            return View();
+            if (Id == null)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "No household found. Check your email for the correct link to join the household." });
+            }
+            var household = db.Households.Find(Id);
+            if (household == null)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "No household found. Check your email for the correct link to join the household." });
+            }
+            //pass a new Household model to the view with everything except the Code value, which they will enter in the form
+            var model = new Household();
+            model.Id = household.Id;
+            model.Name = household.Name;
+            return View(model);
+        }
+
+        //POST:
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Join([Bind(Include = "Id,Name,Code")]Household model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(model.Code))
+                {
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "Code not valid" });
+                }
+                var householdToJoin = db.Households.Find(model.Id);
+                if (householdToJoin == null)
+                {
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "No household found" });
+                }              
+                //check that what the user entered is the right code for the household
+                if (model.Code.Equals(householdToJoin.Code))
+                {
+                    var userId = User.Identity.GetUserId();
+                    //assign the user to the household
+                    AssignUserToHousehold(userId, householdToJoin.Id);
+                    return RedirectToAction("Dashboard", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "Code is incorrect. Please check your email or contact the administrator at annette.arrigucci@gmail.com" });
+                }
+            }
+            return View(model);
         }
 
         //Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Leave()
         {
             return View();

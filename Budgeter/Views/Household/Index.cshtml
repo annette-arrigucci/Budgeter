@@ -5,7 +5,15 @@
 @{
     ViewBag.Title = "Index";
 }
-<h2>Household</h2>
+@*If user is part of a household, display its name; otherwise just display "Household"*@
+@if (ViewBag.HouseholdName != null)
+{
+    <h2>@ViewBag.HouseholdName</h2>
+}
+else
+{
+    <h2>Household</h2>
+}
 <h4>Members</h4>
 
 @if (!Model.Any())

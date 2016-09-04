@@ -58,3 +58,10 @@ else
     emailModel.HouseholdId = ViewBag.HouseholdId; 
 }
 @Html.Partial("_InviteUser", emailModel)
+@{
+    var leaveModel = new LeaveHouseholdViewModel();
+    leaveModel.UserId = User.Identity.GetUserId();
+    leaveModel.HouseholdId = ViewBag.HouseholdId;
+    leaveModel.HasAgreedToLeave = false;
+}
+@Html.Partial("_LeaveHousehold", leaveModel)

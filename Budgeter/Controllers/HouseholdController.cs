@@ -79,7 +79,7 @@ namespace Budgeter.Controllers
 
         //assign the user the HouseholdId - need to use UserManager for this
         //this will overwrite any other HouseholdId that the user has been assigned to
-        public async Task AssignUserToHousehold(string userId, int householdId)
+        public async Task AssignUserToHousehold(string userId, int? householdId)
         {       
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             ApplicationUser user = userManager.FindById(userId);
@@ -91,13 +91,13 @@ namespace Budgeter.Controllers
                 }
                 else
                 {
-                    user.HouseholdId = (int)householdId;
+                    user.HouseholdId = householdId;
                     IdentityResult result = await userManager.UpdateAsync(user);
                 }
             }
             else
             {
-                user.HouseholdId = (int)householdId;
+                user.HouseholdId = householdId;
                 IdentityResult result = await userManager.UpdateAsync(user);
             }                     
         }
@@ -216,12 +216,21 @@ namespace Budgeter.Controllers
             return View(model);
         }
 
-        //Post
+        //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Leave()
+        public ActionResult Leave([Bind(Include = "UserId,HasAgreedToLeave")]LeaveHouseholdViewModel model)
         {
-            return View();
+            //if checkbox is checked, showing user has agreed to leave, assign their HouseholdId to null
+            if (model.HasAgreedToLeave == true)
+            {
+                AssignUserToHousehold(model.UserId, null);
+                return RedirectToAction("Index", "Household");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Household");
+            }
         }
     }
 }

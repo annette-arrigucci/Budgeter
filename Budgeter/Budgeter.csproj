@@ -202,6 +202,7 @@
     <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\Household.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LeaveHouseholdViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RegexUtilities.cs" />
     <Compile Include="Models\Transaction.cs" />
@@ -275,6 +276,7 @@
     <Content Include="Views\Errors\Index.cshtml" />
     <Content Include="Views\Shared\_InviteUser.cshtml" />
     <Content Include="Views\Household\Join.cshtml" />
+    <Content Include="Views\Shared\_LeaveHousehold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

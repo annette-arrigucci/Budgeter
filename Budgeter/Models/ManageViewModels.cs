@@ -12,6 +12,7 @@ namespace Budgeter.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public int? HouseholdId { get; set; }
+        public string HouseholdName { get; set; }
 
         public bool HasPassword { get; set; }
 

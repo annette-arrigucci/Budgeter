@@ -55,6 +55,7 @@ namespace Budgeter.Controllers
         [Authorize]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -70,7 +71,9 @@ namespace Budgeter.Controllers
             var fname = user.FirstName;
             var lname = user.LastName;
             var usermail = user.Email;
-            var hhold = user.HouseholdId;
+            var hholdId = user.HouseholdId;
+            var hhold = db.Households.Find(hholdId);
+            var hholdName = hhold.Name;
 
             var model = new IndexViewModel
             {
@@ -78,7 +81,8 @@ namespace Budgeter.Controllers
                 LastName = lname,
                 Email = usermail,
                 HasPassword = HasPassword(),
-                HouseholdId = hhold/*,*/
+                HouseholdId = hholdId,
+                HouseholdName = hholdName/*,*/
                 //PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 //TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 //Logins = await UserManager.GetLoginsAsync(userId),

@@ -72,8 +72,16 @@ namespace Budgeter.Controllers
             var lname = user.LastName;
             var usermail = user.Email;
             var hholdId = user.HouseholdId;
-            var hhold = db.Households.Find(hholdId);
-            var hholdName = hhold.Name;
+            var hholdName = "";
+            if (user.HouseholdId != null)
+            {
+                var hhold = db.Households.Find(hholdId);
+                hholdName = hhold.Name;
+            }
+            else
+            {
+                hholdName = null;
+            }
 
             var model = new IndexViewModel
             {

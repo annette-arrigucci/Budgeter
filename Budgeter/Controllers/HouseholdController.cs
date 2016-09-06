@@ -52,6 +52,12 @@ namespace Budgeter.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult InvitationSent()
+        {
+            return View();
+        }
+
         //POST: Households/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -136,8 +142,8 @@ namespace Budgeter.Controllers
                     }
                     //if the email address is valid, send the email
                     SendEmailInvitation(email, householdId);
-                    return RedirectToAction("Index","Household");
-
+                    ViewBag.Email = email;
+                    return View("InvitationSent");
                 }
             }
             return View();

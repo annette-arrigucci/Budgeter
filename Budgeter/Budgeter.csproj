@@ -278,6 +278,7 @@
     <Content Include="Views\Shared\_InviteUser.cshtml" />
     <Content Include="Views\Household\Join.cshtml" />
     <Content Include="Views\Shared\_LeaveHousehold.cshtml" />
+    <Content Include="Views\Household\InvitationSent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

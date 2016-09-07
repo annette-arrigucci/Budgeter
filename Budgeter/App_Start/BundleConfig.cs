@@ -25,7 +25,9 @@ namespace Budgeter
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/dist/css/AdminLTE.min.css",
+                      "~/dist/css/skins/skin-green-light.min.css"));
         }
     }
 }

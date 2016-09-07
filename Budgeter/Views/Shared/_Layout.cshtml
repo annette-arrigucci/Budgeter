@@ -42,9 +42,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Logo -->
             <a href="index2.html" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
+                <span class="logo-mini">B</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Admin</b>LTE</span>
+                <span class="logo-lg">Budgeter</span>
             </a>
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -54,7 +54,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-right">
                         <!-- Messages: style can be found in dropdown.less-->
                         @*<li class="dropdown messages-menu">*@
                             <!-- Menu toggle button -->
@@ -152,9 +152,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>*@
-                        @*<li>*@
+                        <li>
                             @Html.Partial("_LoginPartial")
-                        @*</li>*@
+                        </li>
+                        
                         <!-- User Account Menu -->
                         @if (Request.IsAuthenticated)
                         {

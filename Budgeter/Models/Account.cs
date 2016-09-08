@@ -21,6 +21,7 @@ namespace Budgeter.Models
         public Decimal Balance { get; set; }
         [Display(Name = "Reconciled Balance")]
         public Decimal ReconciledBalance { get; set; }
+        public bool IsActive { get; set; }
 
         public Account()
         {

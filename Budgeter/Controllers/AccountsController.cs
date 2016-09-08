@@ -19,7 +19,11 @@ namespace Budgeter.Controllers
         [AuthorizeHouseholdRequired]
         public ActionResult Index()
         {
-            return View(db.Accounts.ToList());
+            var hId = User.Identity.GetHouseholdId();
+            //pass all the accounts that belong to my household and that are active (meaning not deleted)
+            var accountsList = db.Accounts.Where(m => m.HouseholdId == hId).ToList();
+            var activeAccountsList = accountsList.Where(x => x.IsActive == true).ToList();
+            return View(activeAccountsList);
         }
 
         [Authorize]
@@ -75,6 +79,7 @@ namespace Budgeter.Controllers
                 account.Type = cavModel.SelectedType;
                 account.Balance = cavModel.StartingBalance;
                 account.ReconciledBalance = 0.00M;
+                account.IsActive = true;
 
                 db.Accounts.Add(account);
                 db.SaveChanges();

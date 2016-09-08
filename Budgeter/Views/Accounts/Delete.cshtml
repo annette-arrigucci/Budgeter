@@ -3,24 +3,13 @@
 @{
     ViewBag.Title = "Delete";
 }
-
-    <h3>Are you sure you want to delete this?</h3>
-    <div>
-        <h4>Account</h4>
-        <hr />
+<div>
+<h2>Delete Account</h2>    
+    <h4>Are you sure you want to delete this account?</h4>
         <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.HouseholdId)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.HouseholdId)
-            </dd>
-    
             <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
-    
             <dd>
                 @Html.DisplayFor(model => model.Name)
             </dd>
@@ -28,7 +17,6 @@
             <dt>
                 @Html.DisplayNameFor(model => model.Type)
             </dt>
-    
             <dd>
                 @Html.DisplayFor(model => model.Type)
             </dd>
@@ -36,7 +24,6 @@
             <dt>
                 @Html.DisplayNameFor(model => model.Balance)
             </dt>
-    
             <dd>
                 @Html.DisplayFor(model => model.Balance)
             </dd>
@@ -44,19 +31,19 @@
             <dt>
                 @Html.DisplayNameFor(model => model.ReconciledBalance)
             </dt>
-    
             <dd>
                 @Html.DisplayFor(model => model.ReconciledBalance)
             </dd>
-    
         </dl>
     
-        @using (Html.BeginForm()) {
+        @using (Html.BeginForm("DeleteConfirmed", "Accounts", new { id = Model.Id }, FormMethod.Post)) {
             @Html.AntiForgeryToken()
     
             <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
+                <input type="submit" value="Confirm Delete" class="btn btn-default" />
+                
             </div>
         }
-    </div>
+</div>
+
+@Html.ActionLink("Back to Accounts", "Index")

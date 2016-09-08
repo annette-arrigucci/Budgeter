@@ -132,25 +132,35 @@ namespace Budgeter.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
             }
             Account account = db.Accounts.Find(id);
             if (account == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
             }
             return View(account);
         }
 
         // POST: Accounts/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Account account = db.Accounts.Find(id);
-            db.Accounts.Remove(account);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                Account account = db.Accounts.Find(id);
+                if (account == null)
+                {
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
+                }
+                account.IsActive = false;
+
+                db.Entry(account).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(id);
         }
 
         // GET: Accounts/Delete/5

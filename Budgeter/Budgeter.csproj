@@ -200,6 +200,7 @@
     <Compile Include="Models\BudgetItem.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategoryHousehold.cs" />
+    <Compile Include="Models\CreateAccountViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\Household.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -294,6 +295,8 @@
     <Content Include="Views\Accounts\Details.cshtml" />
     <Content Include="Views\Accounts\Edit.cshtml" />
     <Content Include="Views\Accounts\Index.cshtml" />
+    <Content Include="Views\Accounts\DeletedAccounts.cshtml" />
+    <Content Include="Views\Accounts\Restore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

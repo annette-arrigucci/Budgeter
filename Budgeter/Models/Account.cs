@@ -17,6 +17,7 @@ namespace Budgeter.Models
         public string Name { get; set; }
         [Required]
         public string Type { get; set; }
+        [Required]
         public Decimal Balance { get; set; }
         [Display(Name = "Reconciled Balance")]
         public Decimal ReconciledBalance { get; set; }

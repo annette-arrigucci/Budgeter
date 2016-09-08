@@ -96,12 +96,12 @@ namespace Budgeter.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
             }
             Account account = db.Accounts.Find(id);
             if (account == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
             }
             return View(account);
         }
@@ -111,15 +111,18 @@ namespace Budgeter.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,HouseholdId,Name,Type,Balance,ReconciledBalance")] Account account)
+        public ActionResult Edit([Bind(Include = "Id,Name,Type")] Account model)
         {
             if (ModelState.IsValid)
             {
+                var account = db.Accounts.Find(model.Id);
+                account.Name = model.Name;
+
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            return View(account);
+            }          
+            return View(model);
         }
 
         // GET: Accounts/Delete/5

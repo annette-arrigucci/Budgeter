@@ -27,3 +27,7 @@ textarea {
 .navbar-right{
     padding-right: 30px !important;
 }
+
+.not-editable {
+    margin-top: 7px !important;
+}

@@ -64,7 +64,7 @@ namespace Budgeter.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,SelectedType,Balance")] CreateAccountViewModel cavModel)
+        public ActionResult Create([Bind(Include = "Name,SelectedType,StartingBalance")] CreateAccountViewModel cavModel)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Budgeter.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(account);
+            return View(cavModel);
         }
 
         // GET: Accounts/Edit/5
@@ -159,7 +159,7 @@ namespace Budgeter.Controllers
             //{
             //    return HttpNotFound();
             //}
-            return View(account);
+            return View();
         }
 
         // POST: Accounts/Delete/5

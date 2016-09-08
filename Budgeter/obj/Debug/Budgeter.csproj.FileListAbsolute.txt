@@ -1,3 +1,5 @@
+C:\Users\Me\projects\Budgeter\Budgeter\obj\Debug\Budgeter.dll
+C:\Users\Me\projects\Budgeter\Budgeter\obj\Debug\Budgeter.csprojResolveAssemblyReference.cache
 C:\Users\Me\projects\Budgeter\Budgeter\bin\roslyn\csc.exe
 C:\Users\Me\projects\Budgeter\Budgeter\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Users\Me\projects\Budgeter\Budgeter\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -69,6 +71,4 @@ C:\Users\Me\projects\Budgeter\Budgeter\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\Me\projects\Budgeter\Budgeter\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Me\projects\Budgeter\Budgeter\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Me\projects\Budgeter\Budgeter\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Me\projects\Budgeter\Budgeter\obj\Debug\Budgeter.dll
 C:\Users\Me\projects\Budgeter\Budgeter\obj\Debug\Budgeter.pdb
-C:\Users\Me\projects\Budgeter\Budgeter\obj\Debug\Budgeter.csprojResolveAssemblyReference.cache

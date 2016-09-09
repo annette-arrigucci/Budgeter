@@ -31,7 +31,11 @@ namespace Budgeter.Controllers
         [AuthorizeHouseholdRequired]
         public ActionResult DeletedAccounts()
         {
-            return View();
+            var hId = User.Identity.GetHouseholdId();
+            //pass all the accounts that belong to my household and that are active (meaning not deleted)
+            var accountsList = db.Accounts.Where(m => m.HouseholdId == hId).ToList();
+            var inactiveAccountsList = accountsList.Where(x => x.IsActive == false).ToList();
+            return View(inactiveAccountsList);
         }
 
         // GET: Accounts/Details/5

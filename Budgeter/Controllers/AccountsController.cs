@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Budgeter.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Budgeter.Controllers
 {
@@ -37,15 +38,22 @@ namespace Budgeter.Controllers
         [Authorize]
         [AuthorizeHouseholdRequired]
         public ActionResult Details(int? id)
-        {
+        {  
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
             }
             Account account = db.Accounts.Find(id);
             if (account == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
+            }
+            //check if the user is authorized to view this account
+            var helper = new AccountUserHelper();
+            var user = User.Identity.GetUserId();
+            if (helper.CanUserAccessAccount(user, (int)id) == false)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
             }
             return View(account);
         }
@@ -103,6 +111,13 @@ namespace Budgeter.Controllers
             {
                 return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
             }
+            //check if the user is authorized to edit this account
+            var helper = new AccountUserHelper();
+            var user = User.Identity.GetUserId();
+            if (helper.CanUserAccessAccount(user, (int)id) == false)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
+            }
             return View(account);
         }
 
@@ -139,6 +154,13 @@ namespace Budgeter.Controllers
             {
                 return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
             }
+            //check if the user is authorized to delete this account
+            var helper = new AccountUserHelper();
+            var user = User.Identity.GetUserId();
+            if (helper.CanUserAccessAccount(user, (int)id) == false)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
+            }
             return View(account);
         }
 
@@ -154,6 +176,13 @@ namespace Budgeter.Controllers
                 {
                     return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
                 }
+                //check if the user is authorized to delete this account
+                var helper = new AccountUserHelper();
+                var user = User.Identity.GetUserId();
+                if (helper.CanUserAccessAccount(user, id) == false)
+                {
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
+                }
                 account.IsActive = false;
 
                 db.Entry(account).State = EntityState.Modified;
@@ -163,7 +192,7 @@ namespace Budgeter.Controllers
             return View(id);
         }
 
-        // GET: Accounts/Delete/5
+        // GET: Accounts/Restore/5
         [Authorize]
         [AuthorizeHouseholdRequired]
         public ActionResult Restore(int? id)
@@ -177,6 +206,13 @@ namespace Budgeter.Controllers
             //{
             //    return HttpNotFound();
             //}
+            //check if the user is authorized to delete this account
+            var helper = new AccountUserHelper();
+            var user = User.Identity.GetUserId();
+            if (helper.CanUserAccessAccount(user, (int)id) == false)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
+            }
             return View();
         }
 
@@ -188,6 +224,13 @@ namespace Budgeter.Controllers
             //Account account = db.Accounts.Find(id);
             //db.Accounts.Remove(account);
             //db.SaveChanges();
+            //check if the user is authorized to delete this account
+            var helper = new AccountUserHelper();
+            var user = User.Identity.GetUserId();
+            if (helper.CanUserAccessAccount(user, (int)id) == false)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
+            }
             return RedirectToAction("Index");
         }
 

@@ -8,6 +8,16 @@
         <h2>Account</h2>
         <hr />
         <dl class="dl-horizontal">
+            <!--if this is a deleted account, display a status notice to the user-->
+            @if(Model.IsActive == false)
+            {
+                <dt>
+                    Status
+                </dt>
+                <dd>
+                    Deleted
+                </dd>
+            }
             <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>

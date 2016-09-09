@@ -225,18 +225,26 @@ namespace Budgeter.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Leave([Bind(Include = "UserId,HasAgreedToLeave")]LeaveHouseholdViewModel model)
+        public async Task<ActionResult> Leave([Bind(Include = "UserId,HasAgreedToLeave")]LeaveHouseholdViewModel model)
         {
             //if checkbox is checked, showing user has agreed to leave, assign their HouseholdId to null
             if (model.HasAgreedToLeave == true)
             {
-                AssignUserToHousehold(model.UserId, null);
+                await AssignUserToHousehold(model.UserId, null);
+                //Refresh the cookie holding the user identity so the user can't access the household anymore
+                await RefreshCookie(model.UserId);
                 return RedirectToAction("Index", "Household");
             }
             else
             {
                 return RedirectToAction("Index", "Household");
             }
+        }
+
+        public async Task RefreshCookie(string userId)
+        {
+            var user = db.Users.Find(userId);
+            await ControllerContext.HttpContext.RefreshAuthentication(user);
         }
     }
 }

@@ -193,7 +193,7 @@ namespace Budgeter.Controllers
         //POST:
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Join([Bind(Include = "Id,Name,Code")]Household model)
+        public async Task<ActionResult> Join([Bind(Include = "Id,Name,Code")]Household model)
         {
             if (ModelState.IsValid)
             {
@@ -211,7 +211,9 @@ namespace Budgeter.Controllers
                 {
                     var userId = User.Identity.GetUserId();
                     //assign the user to the household
-                    AssignUserToHousehold(userId, householdToJoin.Id);
+                    await AssignUserToHousehold(userId, householdToJoin.Id);
+                    //refresh the cookie
+                    await RefreshCookie(userId);
                     return RedirectToAction("Dashboard", "Home");
                 }
                 else

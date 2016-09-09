@@ -201,41 +201,51 @@ namespace Budgeter.Controllers
         [AuthorizeHouseholdRequired]
         public ActionResult Restore(int? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Account account = db.Accounts.Find(id);
-            //if (account == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //check if the user is authorized to delete this account
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
+            }
+            Account account = db.Accounts.Find(id);
+            if (account == null)
+            {
+                return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
+            }
+            //check if the user is authorized to restore this account
             var helper = new AccountUserHelper();
             var user = User.Identity.GetUserId();
             if (helper.CanUserAccessAccount(user, (int)id) == false)
             {
                 return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
             }
-            return View();
+            return View(account);
         }
 
-        // POST: Accounts/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Accounts/RestoreConfirmed/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RestoreConfirmed(int id)
         {
-            //Account account = db.Accounts.Find(id);
-            //db.Accounts.Remove(account);
-            //db.SaveChanges();
-            //check if the user is authorized to delete this account
-            var helper = new AccountUserHelper();
-            var user = User.Identity.GetUserId();
-            if (helper.CanUserAccessAccount(user, (int)id) == false)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
+                Account account = db.Accounts.Find(id);
+                if (account == null)
+                {
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "Account not found" });
+                }
+                //check if the user is authorized to delete this account
+                var helper = new AccountUserHelper();
+                var user = User.Identity.GetUserId();
+                if (helper.CanUserAccessAccount(user, id) == false)
+                {
+                    return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
+                }
+                account.IsActive = true;
+
+                db.Entry(account).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return View(id);
         }
 
         protected override void Dispose(bool disposing)

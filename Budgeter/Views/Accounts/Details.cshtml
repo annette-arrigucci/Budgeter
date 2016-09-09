@@ -56,7 +56,16 @@
         <div class="col-md-6">
         @Html.ActionLink("View Transactions", "Index", "Transactions", new { id = Model.Id }, new { @class = "btn btn-default" })
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class= "btn btn-default"})
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-default" }) 
+        <!--if this is a deleted account, give the user a link to restore the account-->
+        <!--otherwise give the user a link to delete the account-->
+        @if (Model.IsActive == false)
+        {
+            @Html.ActionLink("Restore", "Restore", new { id = Model.Id }, new { @class = "btn btn-default" })
+        }
+        else
+        {
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-default" })
+        }  
         </div>     
     </div>
 @if (Model.IsActive == false)

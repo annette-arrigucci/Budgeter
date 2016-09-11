@@ -210,6 +210,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RegexUtilities.cs" />
     <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TransactionCreateViewModel.cs" />
     <Compile Include="Models\TransactionsIndexViewModel.cs" />
     <Compile Include="Models\UserInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

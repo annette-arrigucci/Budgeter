@@ -1,6 +1,6 @@
-﻿@model Budgeter.Models.Transaction
+﻿@model Budgeter.Models.TransactionCreateViewModel
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Transactions", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 

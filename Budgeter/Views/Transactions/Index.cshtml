@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<Budgeter.Models.TransactionsIndexViewModel>
-
 @using Budgeter.Models
 
 @{
@@ -17,7 +16,11 @@
 </div>
 <div class="row">
     <div class="col-lg-4">
-        @Html.Partial("_CreateTransaction", new Transaction { AccountId = ViewBag.AccountId })
+       @{ 
+           var createModel = new TransactionCreateViewModel();
+           createModel = ViewBag.CreateModel;
+       }
+        @Html.Partial("_CreateTransaction", createModel)
     </div>
 
     <div class="col-lg-8">

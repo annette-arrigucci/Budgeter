@@ -50,6 +50,15 @@ namespace Budgeter.Controllers
             ViewBag.Balance = accountBalance;
             ViewBag.Reconciled = accountRecBalance;
 
+            var createTransactionModel = new TransactionCreateViewModel();
+            createTransactionModel.AccountId = account.Id;
+            createTransactionModel.CategoryList = new SelectList(db.Categories.ToList());
+            var householdId = User.Identity.GetHouseholdId();
+            var householdUsers = db.Users.Where(x => x.HouseholdId == (int)householdId).ToList();
+            createTransactionModel.HouseholdUsersList = new SelectList(householdUsers);
+            //pass a model to create a new transaction through the ViewBag
+            ViewBag.CreateModel = createTransactionModel;
+
             //transform the transactions so we can show them in the index page
             var transactionsToShow = new List<TransactionsIndexViewModel>();
             foreach(var t in transactions)

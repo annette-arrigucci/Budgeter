@@ -41,6 +41,24 @@ namespace Budgeter.Migrations
                     LastName = "Arrigucci",
                 }, "Abc&123!");
             }
+            context.Categories.AddOrUpdate(
+                    c => c.Name,
+                    new Category { Name = "Paycheck" },
+                    new Category { Name = "Other income" },
+                    new Category { Name = "House" },
+                    new Category { Name = "Utilities" },
+                    new Category { Name = "Food" },
+                    new Category { Name = "Transportation" },
+                    new Category { Name = "Health" },
+                    new Category { Name = "Child care" },
+                    new Category { Name = "Personal care" },
+                    new Category { Name = "Clothing" },
+                    new Category { Name = "Entertainment" },
+                    new Category { Name = "Financing" },
+                    new Category { Name = "Gifts/donations" },
+                    new Category { Name = "Other expense" }
+                  );
+            context.SaveChanges();
         }
     }
 }

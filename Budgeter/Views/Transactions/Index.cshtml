@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Budgeter.Models.TransactionsIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@ViewBag.AccountName</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    Balance: @ViewBag.Balance
+    @Html.Raw(" | ")
+    Reconciled: @ViewBag.Reconciled
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.AccountId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.DateSpent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>*@  
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReconciledAmount)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>*@
+        
+        <th>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.SpentById)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsReconciled)
+        </th>*@
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.AccountId)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.DateSpent)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.DateEntered)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>     
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>*@   
+        <td>
+            @Html.DisplayFor(modelItem => item.ReconciledAmount)
+        </td>   
+        <td>
+            @Html.DisplayFor(modelItem => item.EnteredBy)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.SpentById)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsReconciled)
+        </td>*@         
+    </tr>
+}
+
+</table>

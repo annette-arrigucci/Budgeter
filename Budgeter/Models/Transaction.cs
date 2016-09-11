@@ -15,7 +15,9 @@ namespace Budgeter.Models
         [Required]
         [StringLength(300, MinimumLength = 3)]
         public string Description { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTime DateEntered { get; set; }
+        [Required]
+        public DateTime DateSpent { get; set; }
         [Required]
         public Decimal Amount { get; set; }
         [Required]

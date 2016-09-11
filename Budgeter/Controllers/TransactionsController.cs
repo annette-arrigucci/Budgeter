@@ -38,6 +38,8 @@ namespace Budgeter.Controllers
             }
             //find the transactions for this account
             var transactions = db.Transactions.Where(x => x.AccountId == id).ToList();
+            //pass the account Id to the model
+            ViewBag.AccountId = account.Id;
             //get the account name and put it in the ViewBag
             ViewBag.AccountName = account.Name;
             //get the account balance

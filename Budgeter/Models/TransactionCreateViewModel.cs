@@ -17,6 +17,7 @@ namespace Budgeter.Models
         public string Description { get; set; }
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateSpent { get; set; }
         [Required]
         public Decimal Amount { get; set; }

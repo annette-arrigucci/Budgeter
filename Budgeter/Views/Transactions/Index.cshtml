@@ -1,18 +1,22 @@
 ﻿@model IEnumerable<Budgeter.Models.TransactionsIndexViewModel>
 @using Budgeter.Models
 
+<link href="~/Content/transaction-form-style.css" rel="stylesheet">
+
 @{
     ViewBag.Title = "Index";
 }
 <h2>@ViewBag.AccountName</h2>
 <div class="container"></div>
 <div class="row">
-    <p>
-        @*@Html.ActionLink("Create New", "Create")*@
-        Balance: @ViewBag.Balance
-        @Html.Raw(" | ")
-        Reconciled: @ViewBag.Reconciled
-    </p>
+    <div class="col-lg-4 col-lg-offset-8">   
+        <h4>
+            @*@Html.ActionLink("Create New", "Create")*@
+            Balance: @ViewBag.Balance
+            @Html.Raw(" | ")
+            Reconciled: @ViewBag.Reconciled
+        </h4>
+    </div>
 </div>
 <div class="row">
     <div class="col-lg-4">
@@ -106,7 +110,12 @@
                     </td>*@
             </tr>
         }
-
+        
     </table>
+    <div class="row">
+        <div class="col-lg-4">
+            Starting balance: @ViewBag.StartingBalance
+        </div>
+    </div>
     </div>
 </div>

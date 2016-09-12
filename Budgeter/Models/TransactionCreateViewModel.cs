@@ -17,6 +17,7 @@ namespace Budgeter.Models
         public string Description { get; set; }
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Transaction date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateSpent { get; set; }
         [Required]
@@ -26,14 +27,14 @@ namespace Budgeter.Models
         [Display(Name = "Category")]
         public SelectList CategoryList { get; set; }
         [Required(ErrorMessage = "No type selected")]
-        [Display(Name = "Type")]
+        [Display(Name = "Category")]
         public int SelectedCategory { get; set; }
-        [Display(Name = "Spent by")]
+        [Display(Name = "Transaction by")]
         public SelectList HouseholdUsersList { get; set; }
         [Required(ErrorMessage = "No user selected")]
-        [Display(Name = "Spent by")]
+        [Display(Name = "Transaction by")]
         public string SelectedUser { get; set; }
-        [Display(Name = "Reconciled Amount")]
+        [Display(Name = "Reconciled amount")]
         public Decimal ReconciledAmount { get; set; }
     }
 }

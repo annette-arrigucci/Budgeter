@@ -97,8 +97,7 @@ namespace Budgeter.Controllers
                 account.HouseholdId = (int)User.Identity.GetHouseholdId();
                 account.Name = cavModel.Name;
                 account.Type = cavModel.SelectedType;
-                account.Balance = cavModel.StartingBalance;
-                
+                account.StartingBalance = cavModel.StartingBalance;              
                 account.ReconciledBalance = 0.00M;
                 account.IsActive = true;
 

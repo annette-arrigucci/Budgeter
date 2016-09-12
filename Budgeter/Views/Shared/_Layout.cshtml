@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-
+﻿
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -9,6 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @using Microsoft.AspNet.Identity
     @*<title>AdminLTE 2 | Starter</title>*@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
@@ -175,7 +175,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <img src="~/dist/img/user3-256x256.png" class="img-circle" alt="User Image">
                                     <p>
                                         @User.Identity.GetUserName()
-                                        <small>Household: My House</small>
+                                        @*<small>Household: @User.Identity.</small>*@
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -279,10 +279,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     Page Header
                     <small>Optional description</small>
                 </h1>*@
-                <ol class="breadcrumb">
+                @*<ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                     <li class="active">Here</li>
-                </ol>
+                </ol>*@
             </section>
             <!-- Main content -->
             <section class="content">

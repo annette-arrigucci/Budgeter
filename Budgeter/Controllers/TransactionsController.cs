@@ -68,6 +68,7 @@ namespace Budgeter.Controllers
             //pass the balances in the ViewBag
             ViewBag.Balance = account.Balance;
             ViewBag.Reconciled = account.ReconciledBalance;
+            ViewBag.StartingBalance = account.StartingBalance;
 
             return View(transactionsToShow);
         }
@@ -121,6 +122,13 @@ namespace Budgeter.Controllers
 
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
+
+                var account = db.Accounts.Find(model.AccountId);
+
+                //update the account balance
+                account.UpdateAccountBalance();
+                //update the reconciled balance
+                account.UpdateReconciledAccountBalance();
                 return RedirectToAction("Index", new { id = model.AccountId });
             }
             return RedirectToAction("Index", new { id = model.AccountId });

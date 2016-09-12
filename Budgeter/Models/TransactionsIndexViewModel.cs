@@ -39,7 +39,7 @@ namespace Budgeter.Models
             this.DateSpent = trans.DateSpent;
             this.Amount = trans.Amount;
             this.Type = trans.Type;
-            var category = db.Accounts.Find(trans.CategoryId);
+            var category = db.Categories.Find(trans.CategoryId);
             this.Category = category.Name;
             var enteredBy = db.Users.Find(trans.EnteredById);
             this.EnteredBy = enteredBy.FirstName + " " + enteredBy.LastName;

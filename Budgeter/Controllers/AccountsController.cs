@@ -24,7 +24,15 @@ namespace Budgeter.Controllers
             //pass all the accounts that belong to my household and that are active (meaning not deleted)
             var accountsList = db.Accounts.Where(m => m.HouseholdId == hId).ToList();
             var activeAccountsList = accountsList.Where(x => x.IsActive == true).ToList();
-            return View(activeAccountsList);
+            //for each active account, update the account balance in the database
+            foreach(var a in activeAccountsList)
+            {
+                a.UpdateAccountBalance();
+                a.UpdateReconciledAccountBalance();
+            }
+            //query again with the updated balances, send this to the Index view
+            var updatedAccounts = accountsList.Where(x => x.IsActive == true).ToList();
+            return View(updatedAccounts);
         }
 
         [Authorize]
@@ -90,11 +98,14 @@ namespace Budgeter.Controllers
                 account.Name = cavModel.Name;
                 account.Type = cavModel.SelectedType;
                 account.Balance = cavModel.StartingBalance;
+                
                 account.ReconciledBalance = 0.00M;
                 account.IsActive = true;
 
                 db.Accounts.Add(account);
                 db.SaveChanges();
+
+                
                 return RedirectToAction("Index");
             }
 

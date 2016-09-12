@@ -36,20 +36,7 @@ namespace Budgeter.Controllers
             {
                 return RedirectToAction("Index", "Errors", new { errorMessage = "Not authorized" });
             }
-            //find the transactions for this account
-            var transactions = db.Transactions.Where(x => x.AccountId == id).ToList();
-            //pass the account Id to the model
-            ViewBag.AccountId = account.Id;
-            //get the account name and put it in the ViewBag
-            ViewBag.AccountName = account.Name;
-            //get the account balance
-            var accountBalance = GetAccountBalance(transactions);
-            //get the reconciled balance
-            var accountRecBalance = GetReconciledAccountBalance(transactions);
-            //pass the balances in the ViewBag
-            ViewBag.Balance = accountBalance;
-            ViewBag.Reconciled = accountRecBalance;
-
+            
             var createTransactionModel = new TransactionCreateViewModel();
             createTransactionModel.AccountId = account.Id;
             var categories = db.Categories.ToList();
@@ -60,6 +47,8 @@ namespace Budgeter.Controllers
             //pass a model to create a new transaction through the ViewBag
             ViewBag.CreateModel = createTransactionModel;
 
+            //get all the transactions for this account
+            var transactions = db.Transactions.Where(x => x.AccountId == id).ToList();
             //transform the transactions so we can show them in the index page
             var transactionsToShow = new List<TransactionsIndexViewModel>();
             foreach(var t in transactions)
@@ -67,7 +56,19 @@ namespace Budgeter.Controllers
                 var transToShow = new TransactionsIndexViewModel(t);
                 transactionsToShow.Add(transToShow);
             }
-            
+
+            //pass the account Id to the model
+            ViewBag.AccountId = account.Id;
+            //get the account name and put it in the ViewBag
+            ViewBag.AccountName = account.Name;
+            //update the account balance
+            account.UpdateAccountBalance();
+            //update the reconciled balance
+            account.UpdateReconciledAccountBalance();
+            //pass the balances in the ViewBag
+            ViewBag.Balance = account.Balance;
+            ViewBag.Reconciled = account.ReconciledBalance;
+
             return View(transactionsToShow);
         }
 
@@ -87,26 +88,42 @@ namespace Budgeter.Controllers
         }
 
         // GET: Transactions/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: Transactions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,AccountId,Description,DateEntered,DateSpent,Amount,Type,CategoryId,EnteredById,SpentById,IsReconciled,ReconciledAmount")] Transaction transaction)
+        public ActionResult Create([Bind(Include = "AccountId,Description,DateSpent,Amount,Type,SelectedCategory,SelectedUser,ReconciledAmount")] TransactionCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var transaction = new Transaction();
+                transaction.AccountId = model.AccountId;
+                transaction.Description = model.Description;
+                transaction.DateEntered = DateTime.Now;
+                transaction.DateSpent = model.DateSpent;
+                transaction.Amount = model.Amount;
+                transaction.Type = model.Type;
+                transaction.CategoryId = model.SelectedCategory;
+                transaction.EnteredById = User.Identity.GetUserId();
+                transaction.SpentById = model.SelectedUser;
+                if (model.Amount == model.ReconciledAmount)
+                {
+                    transaction.IsReconciled = true;
+                }
+                else transaction.IsReconciled = false;
+                transaction.ReconciledAmount = model.ReconciledAmount;
+
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = model.AccountId });
             }
-
-            return View(transaction);
+            return RedirectToAction("Index", new { id = model.AccountId });
         }
 
         // GET: Transactions/Edit/5
@@ -175,24 +192,6 @@ namespace Budgeter.Controllers
             base.Dispose(disposing);
         }
 
-        public Decimal GetAccountBalance(List<Transaction> transactions)
-        {
-            Decimal total = 0;
-            foreach (var t in transactions)
-            {
-                total += t.Amount;
-            }
-            return total;
-        }
-
-        public Decimal GetReconciledAccountBalance(List<Transaction> transactions)
-        {
-            Decimal recTotal = 0;
-            foreach (var t in transactions)
-            {
-                recTotal += t.ReconciledAmount;
-            }
-            return recTotal;
-        }
+        
     }
 }

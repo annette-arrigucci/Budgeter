@@ -27,8 +27,7 @@ namespace Budgeter.Models
         public SelectList CategoryList { get; set; }
         [Required(ErrorMessage = "No type selected")]
         [Display(Name = "Type")]
-        public string SelectedCategory { get; set; }
-        [Required]
+        public int SelectedCategory { get; set; }
         [Display(Name = "Spent by")]
         public SelectList HouseholdUsersList { get; set; }
         [Required(ErrorMessage = "No user selected")]
